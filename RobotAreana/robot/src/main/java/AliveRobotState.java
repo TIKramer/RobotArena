@@ -1,15 +1,15 @@
 
-public class AliveRobotState implements RobotControllerState 
+public class AliveRobotState implements RobotControllerState
 {
 	private RobotControl robotControl;
 	private Object lock = new Object();
-	
+
 	public AliveRobotState(RobotControl robotControl)
 	{
 		this.robotControl = robotControl;
 	}
-	
-	public boolean move(int x, int y)
+
+	public boolean move(int x, int y) throws InterruptedException
 	{
 boolean validMove = true;
 		RobotInfo myRobot = robotControl.getRobot();
@@ -31,68 +31,106 @@ boolean validMove = true;
 				try {
 					Thread.sleep(1000);
 				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					throw new InterruptedException();
+
 				}
 			}
 		}
 		return validMove;
 	}
-	public boolean moveNorth()
+	public boolean moveNorth() throws InterruptedException
 	{
-		return move(0,1);
+		boolean validMove = false;
+
+		try
+		{
+		 validMove = move(0,-1);
+	  }
+		catch(InterruptedException e)
+		{
+			throw new InterruptedException();
+		}
+		return validMove;
 	}
-	public boolean moveEast()
+	public boolean moveEast() throws InterruptedException
 	{
-		return move(1,0);
+			boolean validMove = false;
+		try
+		{
+		 validMove = move(1,0);
+	  }
+		catch(InterruptedException e)
+		{
+			throw new InterruptedException();
+		}
+		return validMove;
 
 	}
-	public boolean moveWest()
+	public boolean moveWest() throws InterruptedException
 	{
-		return move(-1,0);
+		boolean validMove = false;
 
-		
-	
+		try
+		{
+		 validMove = move(-1,0);
+   	}
+		catch(InterruptedException e)
+		{
+			throw new InterruptedException();
+		}
+		return validMove;
+
 	}
-	
-	public boolean fire(int x, int y)
+	public boolean moveSouth() throws InterruptedException
+	{
+		boolean validMove = false;
+
+		try
+		{
+		 validMove = move(0,1);
+	  }
+		catch(InterruptedException e)
+		{
+			throw new InterruptedException();
+		}
+		return validMove;
+
+	}
+
+	public boolean fire(int x, int y) throws InterruptedException
 	{
 		boolean valid = false;
 		RobotInfo myRobot = robotControl.getRobot();
-
+		try {
+			Thread.sleep(500);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+		throw new InterruptedException();
+		}
 		for(RobotInfo robot : robotControl.getAllRobots())
 		{
-			if((!(myRobot.getName().equals(robot.getName()) )&&(robot.isAlive())))
+			if((!(myRobot.getName().equals(robot.getName()) ))&&(robot.isAlive()))
 			{
 			if((robot.getX() == x) && (robot.getY() == y))
 			{
 				valid = true;
 			//	robot.hit();
-				
+
 				robotControl.getArena().fireLazer(myRobot.getX(), myRobot.getY(), robot.getX(), robot.getY());
-				
-				HitNotification notification = new HitNotification(myRobot.getName(), robot.getName()); 
+
+				HitNotification notification = new HitNotification(myRobot.getName(), robot.getName());
 				AIGroup.notify(robot.getName(), notification);
 				AIGroup.notify(myRobot.getName(), notification);
-				myRobot.hit( myRobot.getName());
-				try {
-					Thread.sleep(500);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				
+				robot.hit( myRobot.getName());
+				robotControl.logMessage(myRobot.getName() + " has hit " + robot.getName() + "!");
+
+
 			}
 			}
 		}
 		return valid;
 	}
-	public boolean moveSouth() {
-		// TODO Auto-generated method stub
-		
-		return move(0,-1);
 
-	}
-	
+
 
 }

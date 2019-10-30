@@ -6,7 +6,7 @@ public class RobotControl
 	private RobotInfo myRobot;
 	private SwingArena arena;
 	private RobotControllerState state;
-	
+
 	public RobotControllerState getState() {
 		return state;
 	}
@@ -23,39 +23,88 @@ public class RobotControl
 	public RobotInfo getRobot()
 	{
 		return myRobot;
-		
+
 	}
-	
+
 	public List<RobotInfo> getAllRobots()
 	{
 		return holder.getRobots();
 	}
-	public boolean moveNorth() {
-		// TODO Auto-generated method stub
-		return state.moveNorth();
+	public boolean moveNorth() throws InterruptedException{
+		boolean validMove = false;
+		try{
+			validMove = state.moveNorth();
+		}
+		catch(InterruptedException e)
+		{
+			throw new InterruptedException();
+		}
+		return validMove;
 	}
-	public boolean moveSouth() {
+	public boolean moveSouth() throws InterruptedException{
 		// TODO Auto-generated method stub
-		return state.moveSouth();
+		boolean validMove = false;
+		try{
+			validMove = state.moveSouth();
+		}
+		catch(InterruptedException e)
+		{
+			throw new InterruptedException();
+		}
+		return validMove;
 	}
-	public boolean moveEast() {
+
+	public boolean moveEast() throws InterruptedException {
 		// TODO Auto-generated method stub
-		return state.moveEast();
+		boolean validMove = false;
+		try{
+			validMove = state.moveEast();
+		}
+		catch(InterruptedException e)
+		{
+			throw new InterruptedException();
+		}
+		return validMove;
 	}
-	public boolean moveWest() {
+
+	public boolean moveWest() throws InterruptedException {
 		// TODO Auto-generated method stub
-		return state.moveWest();
+		boolean validMove = false;
+		try{
+			validMove = state.moveWest();
+		}
+		catch(InterruptedException e)
+		{
+			throw new InterruptedException();
+		}
+		return validMove;
+
 	}
-	public boolean fire(int x, int y) {
+	public boolean fire(int x, int y) throws InterruptedException{
 		// TODO Auto-generated method stub
-		return state.fire(x, y);
+		boolean validMove = false;
+		try{
+			validMove = state.fire(x, y);
+		}
+		catch(InterruptedException e)
+		{
+			throw new InterruptedException();
+		}
+		 return validMove;
 	}
-	
+
 	public void killRobot()
 	{
 		this.state = new DeadRobotState();
 		arena.repaint();
+	logMessage(myRobot.getName() + " has died!");
+	}
+
+
+	public void logMessage(String message)
+	{
+		Logger logger = new Logger();
+		logger.logMessage(message);
+
 	}
 }
-
-

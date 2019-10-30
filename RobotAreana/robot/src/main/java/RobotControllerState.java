@@ -1,14 +1,15 @@
 
 public interface RobotControllerState {
 
-	public boolean moveNorth();
-	public boolean moveEast();
-	public boolean moveWest();
+	public boolean moveNorth() throws InterruptedException;
+;
+	public boolean moveEast() throws InterruptedException;
+	public boolean moveWest() throws InterruptedException;
 
-	
-	public boolean fire(int x, int y);
-	
-	public boolean moveSouth();
-	
-	
+
+	public boolean fire(int x, int y) throws InterruptedException;
+
+	public boolean moveSouth() throws InterruptedException;
+
+
 }

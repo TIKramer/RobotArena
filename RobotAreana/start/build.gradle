@@ -16,7 +16,11 @@ plugins {
     // Apply the groovy plugin to also add support for Groovy (needed for Spock)
     id 'groovy'
 }
-
+jar{
+manifest{
+attributes'Main-Class':'ExampleSwingApp'
+}
+}
 repositories {
     // Use jcenter for resolving dependencies.
     // You can declare any Maven/Ivy/file repository here.
