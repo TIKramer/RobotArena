@@ -1,0 +1,48 @@
+
+
+plugins {
+   
+    id 'java'
+    id 'c'
+
+}
+
+repositories {
+    
+    jcenter()
+}
+
+dependencies {
+   
+
+    implementation project(':Robot-Project')
+    implementation project(':Main-Project')
+   
+}
+
+model
+{
+	components
+	{
+		mynativelibrary(NativeLibrarySpec)
+		{
+		sources
+		{
+			c
+			{
+			source
+			{
+				srcDirs'src/main/c'
+				include'**/*.c'
+			}}
+		}
+		binaries.all
+		{
+			cCompiler.args"-I/usr/lib/jvm/java-11-openjdk-amd64/include/"
+			cCompiler.args"-I/usr/lib/jvm/java-11-openjdk-amd64/include/linux"
+			cCompiler.args"-I/usr/lib/jvm/java-11-openjdk-amd64/include/win32"
+			
+		}
+	}
+}
+}
